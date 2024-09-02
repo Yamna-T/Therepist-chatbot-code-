@@ -1,45 +1,62 @@
-import streamlit as st
-from langchain.schema import HumanMessage, SystemMessage, AIMessage
-from langchain_openai import ChatOpenAI
-from dotenv import load_dotenv
-import os
+Therapist Chatbot
+This project is a friendly therapist chatbot built with Streamlit, Langchain, and OpenAI's API. The chatbot listens empathetically to user input and provides thoughtful, conversational responses, simulating an AI therapist.
 
-# Load environment variables
-load_dotenv()
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+Features
+Friendly, empathetic AI therapist: The chatbot is designed to respond with compassion and understanding.
+Interactive UI: Built with Streamlit for easy, real-time interaction.
+Powered by OpenAI and Langchain: Uses OpenAI's ChatGPT model to generate thoughtful responses based on user input.
+Getting Started
+Prerequisites
+Make sure you have the following installed on your system:
 
-# Initialize the OpenAI Chat model with a temperature setting
-chat = ChatOpenAI(temperature=0.7)
+Python 3.7 or higher
+pip for package management
+nstallation
+Clone the repository:
 
-# Streamlit configuration
-st.set_page_config(page_title="Therapist Chatbot")
-st.header("Hello, I am your Therapist Chatbot")
+bash
+Copy code
+git clone https://github.com/yourusername/therapist-chatbot.git
+cd therapist-chatbot
+Create a virtual environment and activate it:
 
-# Initialize chat history if not already present
-if 'flowmessages' not in st.session_state:
-    st.session_state['flowmessages'] = [
-        SystemMessage(content="You are a compassionate and empathetic therapist AI assistant.")
-    ]
+bash
+Copy code
+python -m venv venv
+source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+Install the required packages:
 
-# Streamlit UI for user interaction
-input_text = st.text_input("What's on your mind?", key="input")
+bash
+Copy code
+pip install -r requirements.txt
+Set up environment variables:
 
-if st.button("Share your thoughts"):
-    if input_text:
-        # Add user message to the flow
-        st.session_state['flowmessages'].append(HumanMessage(content=input_text))
+Create a .env file in the root directory of the project.
+Add your OpenAI API key:
+makefile
+Copy code
+OPENAI_API_KEY=your_openai_api_key
+Running the Chatbot
+To run the chatbot, use the following command:
 
-        # Get AI response
-        response = chat(st.session_state['flowmessages'])
+bash
+Copy code
+streamlit run app.py
+This will start the Streamlit app, and you can interact with the chatbot through your browser.
 
-        # Append AI response to the chat history
-        st.session_state['flowmessages'].append(AIMessage(content=response.content))
+Usage
+Enter your thoughts or concerns into the input field.
+Click the "Share your thoughts" button.
+The AI therapist will respond with empathetic and thoughtful messages based on your input.
+Example
 
-        # Display chat history
-        for message in st.session_state['flowmessages']:
-            if isinstance(message, HumanMessage):
-                st.write(f"**You:** {message.content}")
-            elif isinstance(message, AIMessage):
-                st.write(f"**Therapist:** {message.content}")
-    else:
-        st.warning("Please enter a message.")
+Future Enhancements
+Integrating more NLP models to enhance the conversation flow.
+Adding user authentication to personalize the experience.
+Expanding the AI's knowledge base for deeper conversations.
+Contributing
+Contributions are welcome! Feel free to open an issue or submit a pull request if you have any suggestions or improvements.
+
+License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
